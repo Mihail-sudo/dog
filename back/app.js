@@ -51,10 +51,12 @@ app.patch('/posts/:id', checkAuth, postCreateValidator, handleValidationErrors, 
 
 app.get('/test', TestController.getAll)
 
-app.get('/test/:id', TestController.getOne)
+app.get('/test/:id', checkAuth, TestController.getOne)
 app.post('/test', checkAuth, handleValidationErrors, TestController.create)
 app.delete('/test/:id', checkAuth, TestController.remove)
 app.patch('/test/:id', checkAuth, handleValidationErrors, TestController.update)
+
+app.get('/check', checkAuth, TestController.checkAnswers)
 
 app.listen(4444, (err) => {
     if (err) {

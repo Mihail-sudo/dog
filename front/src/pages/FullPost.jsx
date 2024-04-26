@@ -57,8 +57,6 @@ export const FullPost = () => {
           ) : ('')
         }
 
-        
-
         { isAuth && userData.role === 'admin' ? (
           data.testUrl ? (            
             <Link to={`/test/${data.testUrl}/edit`}>

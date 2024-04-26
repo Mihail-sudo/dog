@@ -76,7 +76,7 @@ export const AddTest = () => {
 
 
   const addQuestion = () => {
-    setQuestions([question, ...questions])
+    setQuestions([...questions, question])
     setQuestion("")
   }
 

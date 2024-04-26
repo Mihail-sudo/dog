@@ -1,6 +1,32 @@
 import TestModel from '../models/test.js'
 import QuestionModel from '../models/question.js'
 
+export const checkAnswers = async (req, res) => {
+    try {
+        const testId = req.query.id
+        let answers = req.query.answers
+        answers = answers.map((elem) => Number(elem))
+
+        let rights = 0
+
+        const test = await TestModel.findById(testId);
+
+        const questions = test.questions
+        for (var elem in questions) {
+            const question = await QuestionModel.findById(questions[elem]);
+            question.answer === answers[elem] ? rights += 1 : rights += 0
+        }
+
+        res.json({
+            result: rights,
+            max: answers.length
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'couldnt check answers' })
+    } 
+}
+
 export const create = async (req, res) => {
     try {
         const ids = []
@@ -72,8 +98,6 @@ export const getOne = async (req, res) => {
             title: article.title,
             questions: questions
         }
-
-        console.log(response)
 
         res.json(response);
       
