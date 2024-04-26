@@ -39,6 +39,8 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
     })
 })
 
+app.post('/addCourse/:id', checkAuth, UserController.addCourse)
+
 app.get('/tags', PostController.getLastTags)
 
 app.get('/posts', PostController.getAll)

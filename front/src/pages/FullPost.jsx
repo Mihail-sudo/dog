@@ -12,8 +12,10 @@ import { Link } from 'react-router-dom'
 
 import { useSelector } from 'react-redux';
 import { selectIsAuth } from '../redux/slices/auth';
+import { useNavigate } from "react-router-dom";
 
 export const FullPost = () => {
+  const navigate = useNavigate()
   const isAuth = useSelector(selectIsAuth);
   const userData = useSelector(state => state.auth.data)
 
@@ -31,6 +33,16 @@ export const FullPost = () => {
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const addCourse = async () => {
+    if (!isAuth) {
+      window.confirm("sign up to complite the course")
+      navigate('/login')
+    }
+    await axios.post(`/addCourse/${id}`)
+    window.confirm("Вы успешно записаны!")
+    window.location.reload();
+  }
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
@@ -71,6 +83,12 @@ export const FullPost = () => {
         }
 
       </Post>
+      { userData.courses.includes(id) ? (
+        <Button  variant="outlined">Вы записаны на курс</Button>
+      ) : <Button onClick={addCourse} variant="outlined">Записаться на курс</Button>
+      }
+      <br />
+      <br />
       <CommentsBlock
         items={[
           {

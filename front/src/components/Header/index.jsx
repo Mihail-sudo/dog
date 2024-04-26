@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
@@ -8,17 +8,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectIsAuth } from '../../redux/slices/auth';
 
 export const Header = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const isAuth = useSelector(selectIsAuth);
 
   const userData = useSelector(state => state.auth.data)
+  console.log(userData)
 
   const onClickLogout = () => {
     if (window.confirm('are you sure you want to logout?')) {
       dispatch(logout())
+      navigate('/')
       window.localStorage.removeItem('token')
     }
   };
+
+  const account = () => {
+    navigate(`/account/${userData._id}`)
+  }
 
   return (
     <div className={styles.root}>
@@ -36,6 +43,9 @@ export const Header = () => {
                   </Link>
                 ) : ('')
                 }
+                <Button onClick={account} variant="contained">
+                  Профиль
+                </Button>
                 <Button onClick={onClickLogout} variant="contained" color="error">
                   Выйти
                 </Button>

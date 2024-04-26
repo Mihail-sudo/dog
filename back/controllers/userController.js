@@ -93,3 +93,18 @@ export const getMe = async (req, res) => {
     }
 }
 
+export const addCourse = async (req, res) => {
+    try {
+        const courseId = req.params.id
+        const user = await UserModel.findById(req.userId)
+
+        if (!user.courses.includes(courseId)) {
+            user.courses.push(courseId)
+            user.save()
+            return res.json({message: 'successfuly signed up'})
+        } return res.json({message: 'You already on this course'})
+    } catch (err) {
+        console.log(err)
+    }
+}
+

@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import { Routes, Route } from 'react-router-dom'
 import { Header } from "./components";
-import { Home, FullPost, Registration, AddPost, Login, AddTest, TestPass } from "./pages";
+import { Home, FullPost, Registration, AddPost, Login, AddTest, TestPass, Account } from "./pages";
 import { useDispatch } from "react-redux";
 import { fetchAuthMe } from "./redux/slices/auth";
 import React from "react";
@@ -29,6 +29,7 @@ function App() {
           <Route path='/posts/:id/add-test' element={<AddTest />} />
           <Route path='/test/:id/edit' element={<AddTest />} />
           <Route path='/test/:id' element={<TestPass />} /> 
+          <Route path='/account/:id' element={<Account />} /> 
         </Routes>
       </Container>
     </>

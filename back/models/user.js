@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    courses: Array,
     avatarUrl: String,
 },
 {

@@ -1,5 +1,4 @@
 import PostModel from '../models/post.js'
-import mongoose from 'mongoose'
 
 export const create = async (req, res) => {
     try {
