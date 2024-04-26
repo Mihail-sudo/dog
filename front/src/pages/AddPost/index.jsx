@@ -15,7 +15,7 @@ export const AddPost = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const isAuth = useSelector(selectIsAuth)
-  const [isLoading, setisLoading] = React.useState(false);
+  const [, setIsLoading] = React.useState(false);
   const [text, setText] = React.useState('');
   const [title, setTitle] = React.useState('')
   const [tags, setTags] = React.useState('')
@@ -29,7 +29,6 @@ export const AddPost = () => {
     try {
       const formData = new FormData()
       const file = event.target.files[0]
-      console.log(file)
       formData.append('image', file)
       const { data } = await axios.post('/upload', formData)
       setImageUrl(data.url)
@@ -50,7 +49,7 @@ export const AddPost = () => {
 
   const onSubmit = async () => {
     try {
-      setisLoading(true)
+      setIsLoading(true)
 
       const fields = {
         title, 
@@ -84,6 +83,7 @@ export const AddPost = () => {
         console.log(err)
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const options = React.useMemo(

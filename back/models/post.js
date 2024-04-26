@@ -22,6 +22,10 @@ const PostSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
+    testUrl: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Test"
+    },
     imageUrl: String,
 },
 {

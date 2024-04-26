@@ -11,6 +11,8 @@ export const Header = () => {
   const dispatch = useDispatch()
   const isAuth = useSelector(selectIsAuth);
 
+  const userData = useSelector(state => state.auth.data)
+
   const onClickLogout = () => {
     if (window.confirm('are you sure you want to logout?')) {
       dispatch(logout())
@@ -23,14 +25,17 @@ export const Header = () => {
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <Link className={styles.logo} to="/">
-            <div>ARCHAKOV BLOG</div>
+            <div>Coffee network</div>
           </Link>
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <Link to="/add-post">
-                  <Button variant="contained">Написать статью</Button>
-                </Link>
+                { userData.role === "admin" ? (
+                  <Link to="/add-post">
+                    <Button variant="contained">Создать курс</Button>
+                  </Link>
+                ) : ('')
+                }
                 <Button onClick={onClickLogout} variant="contained" color="error">
                   Выйти
                 </Button>

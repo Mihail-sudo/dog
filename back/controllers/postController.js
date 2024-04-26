@@ -1,4 +1,5 @@
 import PostModel from '../models/post.js'
+import mongoose from 'mongoose'
 
 export const create = async (req, res) => {
     try {
@@ -8,6 +9,7 @@ export const create = async (req, res) => {
             imageUrl: req.body.imageUrl,
             tags: req.body.tags.split(','),
             user: req.userId,
+            testUrl: null
         })
 
         const post = await doc.save()
@@ -23,8 +25,8 @@ export const create = async (req, res) => {
 export const getAll = async (req, res) => {
     try {
         const posts = await PostModel.find().populate('user').exec()
-
         res.json(posts)
+        
     } catch (err) {
         console.log(err)
         res.status(500).json({
@@ -49,7 +51,7 @@ export const getOne = async (req, res) => {
         res.json(article);
       
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         res.status(500).json({
             message: "Post getting faild",
         })
@@ -90,6 +92,7 @@ export const update = async (req, res) => {
                 imageUrl: req.body.imageUrl,
                 user: req.userId,
                 tags: req.body.tags.split(','),
+                testUrl: req.body.testUrl
             })
         
         res.json({

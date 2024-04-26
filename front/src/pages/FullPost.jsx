@@ -7,7 +7,16 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import axios from "../axios";
 import ReactMarkdown from "react-markdown";
 
+import Button from "@mui/material/Button";
+import { Link } from 'react-router-dom'
+
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../redux/slices/auth';
+
 export const FullPost = () => {
+  const isAuth = useSelector(selectIsAuth);
+  const userData = useSelector(state => state.auth.data)
+
   const [data, setData] = React.useState()
   const [isLoading, setLoading] = React.useState(true)
   const { id } = useParams()
@@ -20,6 +29,7 @@ export const FullPost = () => {
       console.warn(err)
       alert('error when gets the post')
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (isLoading) {
@@ -38,7 +48,30 @@ export const FullPost = () => {
         commentsCount={3}
         tags={data.tags}
         isFullPost>
-          <ReactMarkdown children={data.text}/>
+        <ReactMarkdown children={data.text}/>
+
+        { isAuth && data.testUrl ? (
+          <Link to={`/test/${data.testUrl}`}>
+            <Button variant="outlined">Пройти тест</Button>
+          </Link>
+          ) : ('')
+        }
+
+        
+
+        { isAuth && userData.role === 'admin' ? (
+          data.testUrl ? (            
+            <Link to={`/test/${data.testUrl}/edit`}>
+              <Button variant="outlined">Изменить тест</Button>
+            </Link>)
+            : (
+            <Link to={`/posts/${data._id}/add-test`}>
+              <Button variant="outlined">Создать тест</Button>
+            </Link>
+            )
+          ) : ('')
+        }
+
       </Post>
       <CommentsBlock
         items={[
@@ -59,7 +92,7 @@ export const FullPost = () => {
         ]}
         isLoading={false}
       >
-        <Index />
+      <Index />
       </CommentsBlock>
     </>
   );

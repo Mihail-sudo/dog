@@ -1,14 +1,12 @@
 import React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
-import { CommentsBlock } from '../components/CommentsBlock';
+// import { CommentsBlock } from '../components/CommentsBlock';
 import { useDispatch, useSelector } from 'react-redux';
-
-import axios from '../axios';
 
 import { fetchPosts, fetchTags } from '../redux/slices/posts';
 
@@ -23,13 +21,14 @@ export const Home = () => {
   React.useEffect(() => {
     dispatch(fetchPosts())
     dispatch(fetchTags())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
+      {/* <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
         <Tab label="Новые" />
         <Tab label="Популярные" />
-      </Tabs>
+      </Tabs> */}
       <Grid container spacing={4}>
         <Grid xs={8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => 
@@ -40,18 +39,18 @@ export const Home = () => {
               id={obj._id}
               title={obj.title}
               imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
-              user={obj.user}
+              user={obj.user ? obj.user : 'deleted account'}
               createdAt={obj.createdAt}
               viewsCount={obj.viewsCount}
               commentsCount={3}
               tags={obj.tags}
-              isEditable={userData?._id === obj.user._id}
+              isEditable={userData?._id === obj.user._id} //&& obj.user.role === "admin"}
             />
           ))}
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock
+          {/* <CommentsBlock
             items={[
               {
                 user: {
@@ -69,7 +68,7 @@ export const Home = () => {
               },
             ]}
             isLoading={false}
-          />
+          /> */}
         </Grid>
       </Grid>
     </>

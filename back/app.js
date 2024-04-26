@@ -1,11 +1,11 @@
-import express, { request }  from "express"
+import express from "express"
 import multer from 'multer'
 import mongoose from "mongoose"
 
 import { loginValidator, postCreateValidator, registerValidator } from "./validations.js"
 
-import { PostController, UserController } from './controllers/index.js'
-import {handleValidationErrors, checkAuth} from './utils/index.js'
+import { PostController, UserController, TestController } from './controllers/index.js'
+import { handleValidationErrors, checkAuth } from './utils/index.js'
 import cors from 'cors'
 
 mongoose.connect(
@@ -47,6 +47,14 @@ app.get('/posts/:id', PostController.getOne)
 app.post('/posts', checkAuth, postCreateValidator, handleValidationErrors, PostController.create)
 app.delete('/posts/:id', checkAuth, PostController.remove)
 app.patch('/posts/:id', checkAuth, postCreateValidator, handleValidationErrors, PostController.update)
+
+
+app.get('/test', TestController.getAll)
+
+app.get('/test/:id', TestController.getOne)
+app.post('/test', checkAuth, handleValidationErrors, TestController.create)
+app.delete('/test/:id', checkAuth, TestController.remove)
+app.patch('/test/:id', checkAuth, handleValidationErrors, TestController.update)
 
 app.listen(4444, (err) => {
     if (err) {
