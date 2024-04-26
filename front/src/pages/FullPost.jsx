@@ -68,7 +68,6 @@ export const FullPost = () => {
           </Link>
           ) : ('')
         }
-
         { isAuth && userData.role === 'admin' ? (
           data.testUrl ? (            
             <Link to={`/test/${data.testUrl}/edit`}>
@@ -83,6 +82,7 @@ export const FullPost = () => {
         }
 
       </Post>
+      {console.log(userData)}
       { userData.courses.includes(id) ? (
         <Button  variant="outlined">Вы записаны на курс</Button>
       ) : <Button onClick={addCourse} variant="outlined">Записаться на курс</Button>
