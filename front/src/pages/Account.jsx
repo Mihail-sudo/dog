@@ -10,27 +10,29 @@ import ListItem from "@mui/material/ListItem";
 import Skeleton from "@mui/material/Skeleton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+import { fetchPosts } from '../redux/slices/posts';
+
 
 export const Account = () => {
   const dispatch = useDispatch()
   const { posts } = useSelector(state => state.posts)
 
+  let [userPosts, setUserPosts] = React.useState([])
+
   const [isLoading, setLoading] = React.useState(true)
 
   const isAuth = useSelector(selectIsAuth);
   const userData = useSelector(state => state.auth.data)
-  console.log(userData)
-  console.log(posts)
-
-  // let userPosts = posts.filter((obj) => u)
 
   const isPostsLoading = posts.status === 'loading'
 
   React.useEffect(() => {
+    dispatch(fetchPosts())
+    setUserPosts(posts.items.filter((obj) => userData.courses.includes(obj._id)))
     setLoading(false)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
@@ -40,7 +42,7 @@ export const Account = () => {
       <h1>Мои курсы</h1>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => 
+          {(isPostsLoading ? [...Array(5)] : userPosts).map((obj, index) => 
           isPostsLoading ? (
             <Post key={index} isLoading={true} />
           ) : (

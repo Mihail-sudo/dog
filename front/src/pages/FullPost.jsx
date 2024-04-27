@@ -50,6 +50,12 @@ export const FullPost = () => {
 
   return (
     <>
+      { userData.courses.includes(id) ? (
+        <Button  variant="outlined" fullWidth>Вы записаны на курс</Button>
+      ) : <Button onClick={addCourse} variant="outlined" fullWidth>Записаться на курс</Button>
+      }
+      <br />
+      <br />
       <Post
         id={data.id}
         title={data.title}
@@ -62,7 +68,7 @@ export const FullPost = () => {
         isFullPost>
         <ReactMarkdown children={data.text}/>
 
-        { isAuth && data.testUrl ? (
+        { isAuth && data.testUrl && userData.courses.includes(id)? (
           <Link to={`/test/${data.testUrl}`}>
             <Button variant="outlined">Пройти тест</Button>
           </Link>
@@ -82,13 +88,6 @@ export const FullPost = () => {
         }
 
       </Post>
-      {console.log(userData)}
-      { userData.courses.includes(id) ? (
-        <Button  variant="outlined">Вы записаны на курс</Button>
-      ) : <Button onClick={addCourse} variant="outlined">Записаться на курс</Button>
-      }
-      <br />
-      <br />
       <CommentsBlock
         items={[
           {
